@@ -1,0 +1,15 @@
+# Разовый бэкап БД; запускается таймером surgut-place-backup.timer.
+[Unit]
+Description=Surgut Place DB backup
+After=network-online.target postgresql.service
+
+[Service]
+Type=oneshot
+User=surgut
+Group=surgut
+WorkingDirectory=/opt/surgut-place
+Environment=BACKUP_DIR=/opt/surgut-place/backups
+Environment=BACKUP_KEEP_DAYS=14
+ExecStart=/opt/surgut-place/scripts/backup.sh
+Nice=10
+IOSchedulingClass=idle

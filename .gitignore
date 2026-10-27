@@ -1,0 +1,23 @@
+# секреты
+.env
+.env.*
+!.env.example
+
+# python / uv
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# данные
+*.db
+*.db-journal
+*.sqlite3
+backups/
+
+# редакторы / ОС
+.vscode/
+.idea/
+.DS_Store

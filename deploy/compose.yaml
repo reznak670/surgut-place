@@ -1,0 +1,32 @@
+# Postgres + Redis для локалки/VPS: `podman compose -f deploy/compose.yaml up -d`
+# (или docker compose). Порты слушают только localhost.
+# Пароль задайте в окружении: POSTGRES_PASSWORD=... (по умолчанию — dev-заглушка).
+services:
+  postgres:
+    image: docker.io/library/postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: surgut_place
+      POSTGRES_USER: surgut
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U surgut -d surgut_place"]
+      interval: 10s
+      retries: 5
+
+  redis:
+    image: docker.io/library/redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:

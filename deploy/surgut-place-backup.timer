@@ -1,0 +1,12 @@
+# Ежедневный бэкап в 04:00 (время сервера). Persistent — догоняет пропущенный запуск.
+# sudo systemctl enable --now surgut-place-backup.timer
+[Unit]
+Description=Daily Surgut Place DB backup at 04:00
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target
